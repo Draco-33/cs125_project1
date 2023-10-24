@@ -220,7 +220,7 @@ int main() {
     if (dealerTot > playerTot)
         {
             printf("You lose to the dealer.\n");
-            printf("You have $%d left.\n", mon);
+            printf("You have $%d left.\n", (mon - bet));
             if (mon-bet <= 0)
                 {
                     printf("You lose.\n");

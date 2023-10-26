@@ -143,53 +143,55 @@ int main() {
     int bet;
     int ans = 0;
     int cardCnt= 3;
-    int mon = 100;
+    float mon = 100;
     int playerTot = 0;
     int dealerTot = 0;
     int play = 1;
+    float winMult;
     system("clear");
     sleep(2);
    //intro
     printf("Hello, welcome to the virtual Black Jack Table!\n");
-    sleep(2);
+    sleep(1);
     printf("You start with $100. \n");
-    sleep(2);
+    sleep(1);
       while(play == 1){
+      winMult = 1;
         printf("You may bet any integer dollar amount that you have remaining.\n");
-        sleep(2);
+        sleep(1);
         printf("How much would you like to bet?: ");
-        sleep(2);
+        sleep(1);
         scanf("%d", &bet);
-          while (bet > mon){ // no over betting
-            printf("Sorry you cant bet that much.\n");
-            sleep(2);
+          while ((bet > mon) && (bet<=0)){ // no over betting
+            printf("Sorry, invalid bet.\n");
+            sleep(1);
             printf("Please enter a valid bet: ");
             scanf("%d", &bet);
-            sleep(2);
+            sleep(1);
            }
         printf("You bet $%d\n",bet);
-        sleep(2);
+        sleep(1);
         mon = mon-bet;
-        printf("You have $%d left.\n",mon);
-        sleep(2);
+        printf("You have $%.2f left.\n",mon);
+        sleep(1);
         printf("\nDealers Cards are: \n");//Dealer Cards
-        sleep(3);
+        sleep(2);
         Card randomCard6 = generateRandomCard();
         displayCardInfo(randomCard6);// Dealer card 1
-        sleep(2);
+        sleep(1);
         printf("\n");
         flippedCard();//Dealer Card 2 (hidden)
-        sleep(2);
+        sleep(1);
     
         printf("\nYour cards are: \n");// Player Cards
-        sleep(3);
+        sleep(2);
         Card randomCard1 = generateRandomCard();
         displayCardInfo(randomCard1);//Player Card 1
-        sleep(2);
+        sleep(1);
         printf("\n");
         Card randomCard2 = generateRandomCard();
         displayCardInfo(randomCard2);// Player Card 2
-        sleep(2);
+        sleep(1);
     
         playerTot = randomCard1.card_value+randomCard2.card_value;//player card total
         printf("\nYour total card value is: %d\n", playerTot);
@@ -255,17 +257,39 @@ int main() {
         }else if*/
     
         printf("Your final combined card value is: %d\n", playerTot);
-        sleep(2);
+        sleep(1);
         printf("The dealer flips their card: \n");
-        sleep(2);
+        sleep(1);
         Card randomCard7 = generateRandomCard();
         displayCardInfo(randomCard7);// Dealer card 2
         dealerTot = randomCard6.card_value+randomCard7.card_value;//dealer card total
-        sleep(2);
+        sleep(1);
         printf("\nThe dealers total card value is: %d\n", dealerTot);
+        if (dealerTot > playerTot)
+        {
+            printf("You lose to the dealer.\n");
+            printf("You have $%.2f left.\n", mon);
+          if (mon <= 0)
+                {
+                    printf("You lose.\n");
+                    printf("You have $%.2f \n",mon);
+                }
+        }
+        else if (playerTot > dealerTot)
+        {
+            mon = mon+bet+(bet*winMult);
+            printf("You win!\n");
+            printf("You have won $%.2f!\n", (bet*winMult));
+            printf("You have $%.2f \n",mon);
+        }
+        else if (playerTot == dealerTot){
+          printf("It's a tie!");
+          printf("You have $%.2f \n",mon);
+        }
         
         printf("Would you like to play again? (1=yes,0=No) ");
         scanf("%d", &play);
+    
     }
     
     return 0;

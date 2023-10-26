@@ -172,8 +172,8 @@ int main() {
     sleep(2);
     printf("\nDealers Cards are: \n");//Dealer Cards
     sleep(3);
-    Card randomCard3 = generateRandomCard();
-    displayCardInfo(randomCard3);// Dealer card 1
+    Card randomCard6 = generateRandomCard();
+    displayCardInfo(randomCard6);// Dealer card 1
     sleep(2);
     printf("\n");
     flippedCard();//Dealer Card 2 (hidden)
@@ -193,44 +193,74 @@ int main() {
     printf("\nYour total card value is: %d\n", playerTot);
     printf("Would you like to hit or stay? (1-Hit, 0-Stay): ");
     scanf("%d",&ans);
-      while ((ans == 1)&&(playerTot<22)){
+      while (ans == 1){
+        if (ans == 1){
+          Card randomCard3 = generateRandomCard();
+          displayCardInfo(randomCard3);//Player Card 3
+          playerTot = playerTot+randomCard3.card_value;//player card total
+            if (playerTot > 21){
+              printf("Bust!\nYou lose!\n");
+              break;
+            }else if (playerTot == 21){
+              printf("21! Congrats!");
+            }else if (playerTot < 21){
+            printf("\nYour total card value is: %d\n", playerTot);
+              printf("Would you like to hit or stay? (1-Hit, 0-Stay): ");
+              scanf("%d",&ans);
+                if (ans == 1){
+                  Card randomCard4 = generateRandomCard();
+                  displayCardInfo(randomCard4);//Player Card 4
+                  playerTot = playerTot+randomCard4.card_value;//player card total
+                    if (playerTot > 21){
+                      printf("Bust!\nYou lose!\n");
+                      break;
+                    }else if (playerTot == 21){
+                      printf("21! Congrats!");
+                    }else if (playerTot < 21){
+                      printf("\nYour total card value is: %d\n", playerTot);
+                      printf("Would you like to hit or stay? (1-Hit, 0-Stay): ");
+                      scanf("%d",&ans);
+                        if (ans == 1){
+                          Card randomCard5 = generateRandomCard();
+                          displayCardInfo(randomCard5);//Player Card 5
+                          playerTot = playerTot+randomCard5.card_value;//player card total
+                            if (playerTot > 21){
+                              printf("Bust!\nYou lose!\n");
+                              break;
+                            }else if (playerTot <= 21){
+                              printf("Holy Moly! Five Finger Charlie punch!\n");
+                            }
+                        } else if (ans == 0){
+                            break;
+                            }
+                    }
+                } else if (ans == 0){
+                    break;
+                    }
+            }
+        } else if (ans == 0){
+            break;
+            }
+      }
       
       
-      
-      
-      
-        if (ans == 0){
+       /* if (ans == 0){
           break;
         }else if (playerTot > 21){
           sleep(.5);
           printf("\nBust!!\n You lose!\n");
           break;
-        }
-    }
-    printf("Your final total card value is: %d\n", playerTot);
+        }else if*/
+    
+    printf("Your final combined card value is: %d\n", playerTot);
     sleep(2);
-    printf("The dealer flips their card: ");
+    printf("The dealer flips their card: \n");
     sleep(2);
-    Card randomCard0 = generateRandomCard();
-    displayCardInfo(randomCard0);// Dealer card 2
-    dealerTot = randomCard0.card_value+randomCard3.card_value;//dealer card total
+    Card randomCard7 = generateRandomCard();
+    displayCardInfo(randomCard7);// Dealer card 2
+    dealerTot = randomCard6.card_value+randomCard7.card_value;//dealer card total
     sleep(2);
     printf("\nThe dealers total card value is: %d\n", dealerTot);
-
-    if (dealerTot > playerTot)
-        {
-            printf("You lose to the dealer.\n");
-            printf("You have $%d left.\n", mon);
-            if (mon-bet <= 0)
-                {
-                    printf("You lose.\n");
-                }
-        }
-    else if (playerTot > dealerTot)
-        {
-            printf("You win!");
-            printf("You have won $%d!", (bet + bet));
-        }
     
     return 0;
 }

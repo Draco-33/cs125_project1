@@ -203,10 +203,11 @@ int main() {
               displayCardInfo(randomCard3);//Player Card 3
               playerTot = playerTot+randomCard3.card_value;//player card total
                 if (playerTot > 21){
-                  printf("Bust!\nYou lose!\n");
+                  printf("Bust!\n");
                   break;
                 }else if (playerTot == 21){
                   printf("21! Congrats!");
+                  break;
                 }else if (playerTot < 21){
                 printf("\nYour total card value is: %d\n", playerTot);
                   printf("Would you like to hit or stay? (1-Hit, 0-Stay): ");
@@ -216,10 +217,11 @@ int main() {
                       displayCardInfo(randomCard4);//Player Card 4
                       playerTot = playerTot+randomCard4.card_value;//player card total
                         if (playerTot > 21){
-                          printf("Bust!\nYou lose!\n");
+                          printf("Bust!\n");
                           break;
                         }else if (playerTot == 21){
                           printf("21! Congrats!");
+                          break;
                         }else if (playerTot < 21){
                           printf("\nYour total card value is: %d\n", playerTot);
                           printf("Would you like to hit or stay? (1-Hit, 0-Stay): ");
@@ -229,10 +231,12 @@ int main() {
                               displayCardInfo(randomCard5);//Player Card 5
                               playerTot = playerTot+randomCard5.card_value;//player card total
                                 if (playerTot > 21){
-                                  printf("Bust!\nYou lose!\n");
+                                  printf("Bust!");
                                   break;
                                 }else if (playerTot <= 21){
                                   printf("Holy Moly! Five Finger Charlie punch!\n");
+                                  winMult = 5;
+                                  break;
                                 }
                             } else if (ans == 0){
                                 break;
@@ -247,14 +251,6 @@ int main() {
                 }
           }
       
-      
-       /* if (ans == 0){
-          break;
-        }else if (playerTot > 21){
-          sleep(.5);
-          printf("\nBust!!\n You lose!\n");
-          break;
-        }else if*/
     
         printf("Your final combined card value is: %d\n", playerTot);
         sleep(1);
@@ -263,9 +259,25 @@ int main() {
         Card randomCard7 = generateRandomCard();
         displayCardInfo(randomCard7);// Dealer card 2
         dealerTot = randomCard6.card_value+randomCard7.card_value;//dealer card total
+        printf("\nThe dealers combined value is: %d\n", dealerTot);
+        sleep(1);
+          if (dealerTot<17){
+            Card randomCard8 = generateRandomCard();
+            dealerTot = dealerTot+randomCard8.card_value;//dealer card total
+            displayCardInfo(randomCard8);// Dealer card 3
+            printf("\nThe dealers combined value is: %d\n", dealerTot);
+            sleep(1);
+              if (dealerTot<17){
+                Card randomCard9 = generateRandomCard();
+                dealerTot = dealerTot+randomCard9.card_value;//dealer card total
+                displayCardInfo(randomCard9);// Dealer card 3
+                printf("\nThe dealers combined value is: %d\n", dealerTot);
+                sleep(1);
+            }
+          }
         sleep(1);
         printf("\nThe dealers total card value is: %d\n", dealerTot);
-        if (dealerTot > playerTot)
+        if (dealerTot > playerTot) // lose
         {
             printf("You lose to the dealer.\n");
             printf("You have $%.2f left.\n", mon);
@@ -275,15 +287,16 @@ int main() {
                     printf("You have $%.2f \n",mon);
                 }
         }
-        else if (playerTot > dealerTot)
+        else if (playerTot > dealerTot) // win
         {
             mon = mon+bet+(bet*winMult);
             printf("You win!\n");
             printf("You have won $%.2f!\n", (bet*winMult));
             printf("You have $%.2f \n",mon);
         }
-        else if (playerTot == dealerTot){
-          printf("It's a tie!");
+        else if (playerTot == dealerTot){ //push
+          printf("It's a push!");
+          mon = mon + bet;
           printf("You have $%.2f \n",mon);
         }
         

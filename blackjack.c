@@ -139,6 +139,26 @@ void flippedCard(){
     printf("%s|________|%s\n", RED, BLACK);
 }
 
+float winCon(float mon,float winMult, int bet){
+  printf("You win!!\n");
+  mon = mon + (bet*winMult);
+  printf("You have $%.2f \n",mon);
+  return mon;
+}
+
+float loseCon(float mon){
+  printf("You lose!!\n);
+  printf("You have $%.2f \n",mon);
+  return 0;
+}
+
+float push(float mon, int bet){
+  printf("It's a push!!\n);
+  mon = mon + bet;
+  printf("You have $%.2f \n",mon);
+  return mon;
+}
+
 int main() {
     int bet;
     int ans = 1;
@@ -148,7 +168,7 @@ int main() {
     int dealerTot = 0;
     int play = 1;
     float winMult;
-    int LossID, dealerBust;
+    int LossID, dealerBust, blackjack1, blackjack2, charlie;
     
     system("clear");
     sleep(2);
@@ -201,6 +221,7 @@ int main() {
           if (playerTot == 21){
             printf("Black Jack!\n");
             winMult = 1.5;
+            blackjack1 = 1;
             ans = 0;
             }
         
@@ -264,6 +285,8 @@ int main() {
                                 }else if (playerTot <= 21){
                                   printf("Holy Moly! Five Finger Charlie punch!\n");
                                   winMult = 5;
+                                  charile = 1;
+                                  
                                   break;
                                 }
                             } else if (ans == 0){
@@ -292,6 +315,9 @@ int main() {
         displayCardInfo(randomCard7);// Dealer card 2
         dealerTot = randomCard6.card_value+randomCard7.card_value;//dealer card total
         printf("\nThe dealers combined value is: %d\n", dealerTot);
+        if(dealerTot == 21){
+          blackjack2 = 1;
+        }
         sleep(1);
           if (dealerTot<17){
             Card randomCard8 = generateRandomCard();
@@ -318,6 +344,37 @@ int main() {
           dealerBust = 1;
           }
         sleep(1);
+        if(charlie==1){
+        winCon(mon,winMult,bet);
+        }else if((blackjack1==1)&&(blackjack2==1){
+          push(mon,bet);
+        }else if(blackjack1==1){
+          printf("You got Blackjack!!!\n");
+          winCon(mon, winMult,bet);
+        }else if(blackjack2==1){
+          printf("The Dealer got Blackjack!!!\n");
+          loseCon(mon);
+        }else if((dealerTot > playerTot)&&(dealerBust!=1)){
+          printf("You lose to the dealer.\n");
+          loseCon(mon);
+        }else if((dealerBust == 1)&&(LossID!=1){
+          print("Dealer is Bust!!\n);
+          winCon(mon,winMult,bet);
+        }else if(LossID == 1){
+          loseCon(mon);
+        }else if(
+        
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
         printf("\nThe dealers total card value is: %d\n", dealerTot);
         if ((dealerTot > playerTot)&&(dealerBust == 0)) // lose
         {

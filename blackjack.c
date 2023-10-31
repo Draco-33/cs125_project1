@@ -55,7 +55,7 @@ Card generateRandomCard() {
 
     switch (rval) {
         case 0: // Ace
-            card.card_value = 1; 
+            card.card_value = 11; 
             card.cardChar = 'A';
             break;
         case 1: // 2
@@ -141,14 +141,15 @@ void flippedCard(){
 
 int main() {
     int bet;
-    int ans = 0;
+    int ans = 1;
     int cardCnt= 3;
     float mon = 100;
     int playerTot = 0;
     int dealerTot = 0;
     int play = 1;
     float winMult;
-    int LossID = 0;
+    int LossID, dealerBust;
+    
     system("clear");
     sleep(2);
    //intro
@@ -158,6 +159,8 @@ int main() {
     sleep(1);
       while(play == 1){
       winMult = 1;
+      dealerBust = 0;
+      LossID = 0;
         printf("You may bet any integer dollar amount that you have remaining.\n");
         sleep(1);
         printf("How much would you like to bet?: ");
@@ -195,18 +198,29 @@ int main() {
         sleep(1);
     
         playerTot = randomCard1.card_value+randomCard2.card_value;//player card total
-        printf("\nYour total card value is: %d\n", playerTot);
-        printf("Would you like to hit or stay? (1-Hit, 0-Stay): ");
-        scanf("%d",&ans);
+          if (playerTot == 21){
+            printf("Black Jack!\n");
+            winMult = 1.5;
+            ans = 0;
+            }
+        
           while (ans == 1){
+            printf("\nYour total card value is: %d\n", playerTot);
+            printf("Would you like to hit or stay? (1-Hit, 0-Stay): ");
+            scanf("%d",&ans);
             if (ans == 1){
               Card randomCard3 = generateRandomCard();
               displayCardInfo(randomCard3);//Player Card 3
               playerTot = playerTot+randomCard3.card_value;//player card total
+                card1:
                 if (playerTot > 21){
-                  printf("Bust!\n");
-                  LossID = 1;
-                  break;
+                    if ((randomCard1.card_value == 11)||(randomCard2.card_value == 11)||(randomCard3.card_value == 11)){
+                      playerTot = playerTot-10;
+                      goto card1;
+                      }
+                    printf("Bust!\n");
+                    LossID = 1;
+                      break;
                 }else if (playerTot == 21){
                   printf("21! Congrats!");
                   break;
@@ -218,9 +232,14 @@ int main() {
                       Card randomCard4 = generateRandomCard();
                       displayCardInfo(randomCard4);//Player Card 4
                       playerTot = playerTot+randomCard4.card_value;//player card total
+                      card2:
                         if (playerTot > 21){
+                          if ((randomCard1.card_value == 11)||(randomCard2.card_value == 11)||(randomCard3.card_value == 11)||(randomCard4.card_value == 11)){
+                            playerTot = playerTot-10;
+                            goto card2;
+                          }
                           printf("Bust!\n");
-                           LossID = 1;
+                          LossID = 1;
                           break;
                         }else if (playerTot == 21){
                           printf("21! Congrats!");
@@ -233,8 +252,13 @@ int main() {
                               Card randomCard5 = generateRandomCard();
                               displayCardInfo(randomCard5);//Player Card 5
                               playerTot = playerTot+randomCard5.card_value;//player card total
+                              card3:
                                 if (playerTot > 21){
-                                  printf("Bust!");
+                                  if ((randomCard1.card_value == 11)||(randomCard2.card_value == 11)||(randomCard3.card_value == 11)||(randomCard4.card_value == 11)||(randomCard5.card_value == 11)){
+                                      playerTot = playerTot-10;
+                                      goto card3;
+                                    }
+                                   printf("Bust!");
                                    LossID = 1;
                                   break;
                                 }else if (playerTot <= 21){
@@ -257,8 +281,12 @@ int main() {
       
     
         printf("Your final combined card value is: %d\n", playerTot);
+        sleep(2);
+        printf("The dealers cards: \n");
         sleep(1);
-        printf("The dealer flips their card: \n");
+        displayCardInfo(randomCard6);// Dealer card 1
+        sleep(1);
+        printf("The dealer flips their face down card: \n");
         sleep(1);
         Card randomCard7 = generateRandomCard();
         displayCardInfo(randomCard7);// Dealer card 2
@@ -277,17 +305,27 @@ int main() {
                 displayCardInfo(randomCard9);// Dealer card 4
                 printf("\nThe dealers combined value is: %d\n", dealerTot);
                 sleep(1);
-            }
+                  if (dealerTot<17){
+                    Card randomCard10 = generateRandomCard();
+                    dealerTot = dealerTot+randomCard10.card_value;//dealer card total
+                    displayCardInfo(randomCard10);// Dealer card 5
+                    printf("\nThe dealers combined value is: %d\n", dealerTot);
+                    sleep(1);
+                  }  
+              }
+          }
+        if (dealerTot > 21){
+          dealerBust = 1;
           }
         sleep(1);
         printf("\nThe dealers total card value is: %d\n", dealerTot);
-        if ((dealerTot > playerTot)&&(dealerTot<=21)) // lose
+        if ((dealerTot > playerTot)&&(dealerBust == 0)) // lose
         {
             printf("You lose to the dealer.\n");
             printf("You have $%.2f left.\n", mon);
           if (mon <= 0)
                 {
-                    printf("You lose.\n");
+                    
                     printf("You have $%.2f \n",mon);
                 }
         }

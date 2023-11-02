@@ -4,7 +4,7 @@
 #include <string.h>
 #include <unistd.h>
 #include <wchar.h>
-
+#include "functions.h"
 
 #define RED "\x1b[31m"
 #define GREY "\x1b[90m"
@@ -14,7 +14,7 @@
 #define CLUBS "\u2663"
 #define SPADES "\u2660"
 
-typedef struct {
+/*typedef struct {
     const char *suit_symbol;
     char cardChar;
     const char *color_code;
@@ -158,12 +158,12 @@ float push(float mon, int bet){
   printf("You have $%.2f \n",mon);
   return mon;
 }
-
+*/
 int main(){
     int bet;
     int ans = 1;
     int cardCnt= 3;
-    float mon = 100;
+    float mon=100;
     int playerTot = 0;
     int dealerTot = 0;
     int play = 1;
@@ -181,6 +181,7 @@ int main(){
       winMult = 1;
       dealerBust = 0;
       LossID = 0;
+      ans = 1;
         printf("You may bet any integer dollar amount that you have remaining.\n");
         sleep(1);
         printf("How much would you like to bet?: ");
@@ -207,7 +208,7 @@ int main(){
         flippedCard();//Dealer Card 2 (hidden)
         sleep(1);
     
-        printf("\nYour cards are: \n");// Player Cards
+        printf("\n\nYour cards are: \n\n");// Player Cards
         sleep(2);
         Card randomCard1 = generateRandomCard();
         displayCardInfo(randomCard1);//Player Card 1
@@ -305,11 +306,11 @@ int main(){
     
         printf("Your final combined card value is: %d\n", playerTot);
         sleep(2);
-        printf("The dealers cards: \n");
+        printf("\nThe dealers cards: \n\n");
         sleep(1);
         displayCardInfo(randomCard6);// Dealer card 1
         sleep(1);
-        printf("The dealer flips their face down card: \n");
+        printf("\nThe dealer flips their face down card: \n");
         sleep(1);
         Card randomCard7 = generateRandomCard();
         displayCardInfo(randomCard7);// Dealer card 2
@@ -345,62 +346,56 @@ int main(){
           }
         sleep(1);
         if(charlie==1){
-        winCon(mon,winMult,bet);
-        }else if((blackjack1==1)&&(blackjack2==1)){
-          push(mon,bet);
-        }else if(blackjack1==1){
-          printf("You got Blackjack!!!\n");
-          winCon(mon,winMult,bet);
-        }else if(blackjack2==1){
-          printf("The Dealer got Blackjack!!!\n");
-          loseCon(mon);
-        }else if((dealerTot > playerTot)&&(dealerBust!=1)){
-          printf("You lose to the dealer\n");
-          loseCon(mon);
-        }else if((dealerBust == 1)&&(LossID!=1)){
-          printf("Dealer is Bust!!\n");
-          winCon(mon,winMult,bet);
-        }else if(LossID == 1){
-          loseCon(mon);
-        }else if(playerTot == dealerTot){
-          push(mon,bet);
-        }else if(playerTot > dealerTot){
-          winCon(mon,winMult,bet);
-        }
-       /*
-        printf("\nThe dealers total card value is: %d\n", dealerTot);
-        if ((dealerTot > playerTot)&&(dealerBust == 0)) // lose
-        {
-            printf("You lose to the dealer.\n");
-            printf("You have $%.2f left.\n", mon);
-          if (mon <= 0)
-                {
-                    
-                    printf("You have $%.2f \n",mon);
-                }
-        }
-        else if(LossID==1){
-          printf("You lose!\n");
-           printf("You have $%.2f \n",mon);
-           }
-        else if ((playerTot > dealerTot)&&(playerTot<=21)) // win
-        {
-            mon = mon+bet+(bet*winMult);
-            printf("You win!\n");
-            printf("You have won $%.2f!\n", (bet*winMult));
-            printf("You have $%.2f \n",mon);
-        }
-        else if ((playerTot == dealerTot)&&(playerTot<=21)){ //push
-          printf("It's a push!");
-          mon = mon + bet;
-          printf("You have $%.2f \n",mon);
-        }
-        */
+          mon = winCon(mon,winMult,bet);
         
+        }else if((blackjack1==1)&&(blackjack2==1)){
+           mon = push(mon,bet);
+        
+        }else if((blackjack1==1)&&(blackjack2!=1)){
+           printf("You got Blackjack!!!\n");
+           mon = winCon(mon,winMult,bet);
+        
+        }else if((blackjack2==1)&&(blackjack1!=1)){
+           printf("The Dealer got Blackjack!!!\n");
+           loseCon(mon);
+        
+        }else if(playerTot == dealerTot){
+           mon = push(mon,bet);
+        
+        }else if((dealerTot > playerTot)&&(dealerBust!=1)){
+           printf("You lose to the dealer\n");
+           loseCon(mon);
+        
+        }else if((dealerBust == 1)&&(LossID!=1)){
+           printf("Dealer Busts!!\n");
+           mon = winCon(mon,winMult,bet);
+        
+        }else if((LossID == 1)&&(dealerBust==1)){
+           loseCon(mon);
+        
+        }else if((LossID == 1)&&(dealerTot<=21)){
+           loseCon(mon);
+        
+        }else if((playerTot > dealerTot)&&(LossID!=1)){
+           mon =  winCon(mon,winMult,bet);
+        }
+        if(mon==0){
+          printf("You're broke sucker\n");
+          break;
+        }
         printf("Would you like to play again? (1=yes,0=No) ");
         scanf("%d", &play);
-    
+        if(play == 1)
+          system("clear");
     }
+    FILE *f1 = fopen("Recept", "w");
+    fprintf(f1,"\n");
+    fprintf(f1,"You ended the game with $%.2f \n",mon);
+    fprintf(f1,"\n");
+    fprintf(f1,"\n");
+    fprintf(f1,"Please take this recept to the cashier to cash out\n");
+    fclose(f1);
+    printf("Your recept is in the text file Recept\n");
     
     return 0;
 }

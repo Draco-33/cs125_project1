@@ -22,9 +22,14 @@ typedef struct {
     int card_value;
 } Card;
 
-Card generateRandomCard() ;
+Card generateRandomCard();
+
 void displayCardInfo(Card card);
+
 void flippedCard();
+
 float winCon(float mon,float winMult, int bet);
+
 float loseCon(float mon);
+
 float push(float mon, int bet);

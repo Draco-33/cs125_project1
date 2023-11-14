@@ -36,17 +36,21 @@ int main(){
     sleep(1);
     printf("You start with $100. \n");
     sleep(1);
+    mon_array[0] = mon;
       while(play == 1){
       winMult = 1;
       dealerBust = 0;
       LossID = 0;
       ans = 1;
+      blackjack1 = 0;
+      blackjack2 = 0;
+      charlie = 0;
         printf("You may bet any integer dollar amount that you have remaining.\n");
         sleep(1);
         printf("How much would you like to bet?: ");
         sleep(1);
         scanf("%d", &bet);
-          while ((bet > mon) && (bet<=0)){ // no over betting
+          while ((bet > mon) || (bet<=0)){ // no over betting
             printf("Sorry, invalid bet.\n");
             sleep(1);
             printf("Please enter a valid bet: ");
@@ -218,9 +222,12 @@ int main(){
            printf("The Dealer got Blackjack!!!\n");
            loseCon(mon);
         
+        }else if((LossID == 1)&&(dealerBust==1)){
+           loseCon(mon);
+           
         }else if(playerTot == dealerTot){
            mon = push(mon,bet);
-        
+           
         }else if((dealerTot > playerTot)&&(dealerBust!=1)){
            printf("You lose to the dealer\n");
            loseCon(mon);
@@ -229,36 +236,35 @@ int main(){
            printf("Dealer Busts!!\n");
            mon = winCon(mon,winMult,bet);
         
-        }else if((LossID == 1)&&(dealerBust==1)){
-           loseCon(mon);
-        
         }else if((LossID == 1)&&(dealerTot<=21)){
            loseCon(mon);
         
         }else if((playerTot > dealerTot)&&(LossID!=1)){
            mon =  winCon(mon,winMult,bet);
         }
-        mon_array[play_cnt] = mon;      //
+        mon_array[play_cnt+1] = mon;      //Array for mon totals
         if(mon==0){
           printf("You're broke sucker\n");
           break;
-        }
-        printf("Would you like to play again? (1=yes,0=No) ");
+        } 
+        printf("Would you like to play again? (1=yes,0=No) ");     // while loop end to see of you want to play again
         scanf("%d", &play);
-        if(play == 1)
+        if(play == 1) 
           system("clear");
           printf("You have $%.2f\n",mon);
           play_cnt++;
     }
-    FILE *f1 = fopen("Recept", "w");
+    FILE *f1 = fopen("Recept", "w");      // Writing to a file to make your recipt 
     fprintf(f1,"\n");
     fprintf(f1,"You ended the game with $%.2f \n",mon);
     fprintf(f1,"\n");
     fprintf(f1,"\n");
     fprintf(f1," Your money after each game: ");
     for(play_cntloop=0; play_cntloop<=play_cnt; play_cntloop++){
-      fprintf(f1,"Game %d: %.2f, ", play_cntloop+1, mon_array[play_cntloop]);
+      fprintf(f1,"Game %d: %.2f ", play_cntloop+1, mon_array[play_cntloop]);
     }
+    fprintf(f1,"\n");
+    fprintf(f1,"\n");
     fprintf(f1,"\n");
     fprintf(f1,"Please take this recept to the cashier to cash out\n");
     fclose(f1);

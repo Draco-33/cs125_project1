@@ -1,4 +1,5 @@
 #include "functions.h"
+#include "structure.h"
 Card generateRandomCard() {
     Card card;
     srand(time(NULL));

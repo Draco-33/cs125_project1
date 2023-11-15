@@ -5,6 +5,7 @@
 #include <unistd.h>
 #include <wchar.h>
 #include "functions.h"
+#include "structure.h"
 
 #define RED "\x1b[31m"
 #define GREY "\x1b[90m"

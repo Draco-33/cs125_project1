@@ -5,7 +5,6 @@
 #include <string.h>
 #include <unistd.h>
 #include <wchar.h>
-#include "structure.h"
 
 
 #define RED "\x1b[31m"
@@ -16,13 +15,11 @@
 #define CLUBS "\u2663"
 #define SPADES "\u2660"
 
+typedef struct {
+    const char *suit_symbol;
+    char cardChar;
+    const char *color_code;
+    int card_value;
+} Card;
 
-void displayCardInfo(Card card);
-
-void flippedCard();
-
-float winCon(float mon,float winMult, int bet);
-
-float loseCon(float mon);
-
-float push(float mon, int bet);
+Card generateRandomCard();

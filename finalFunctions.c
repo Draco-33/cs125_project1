@@ -141,3 +141,4 @@ float push(float mon, int bet) {
     printf("You have $%.2f \n", mon);
     return mon;
 }
+

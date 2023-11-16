@@ -5,7 +5,6 @@
 #include <unistd.h>
 #include <wchar.h>
 #include "functions.h"
-#include "structure.h"
 
 #define RED "\x1b[31m"
 #define GREY "\x1b[90m"
@@ -15,13 +14,8 @@
 #define CLUBS "\u2663"
 #define SPADES "\u2660"
 
-
-
+int main() {
     // Variable Declarations
-
-
-int main(){
-
     int bet;
     int ans = 1;
     int card_cnt = 3;
@@ -29,19 +23,10 @@ int main(){
     int player_tot = 0;
     int dealer_tot = 0;
     int play = 1;
-
     float win_mult;
     int loss_id, dealer_bust, blackjack1, blackjack2, charlie;
 
     // Clear the console screen
-
-    float mon_array[100];
-    int play_cntloop;
-    float winMult;
-    int play_cnt = 0;
-    int LossID, dealerBust, blackjack1, blackjack2, charlie;
-    
-
     system("clear");
     sleep(2);
 
@@ -50,7 +35,6 @@ int main(){
     sleep(1);
     printf("You start with $100. \n");
     sleep(1);
-
 
     // Main Game Loop
     while (play == 1) {
@@ -64,17 +48,6 @@ int main(){
         charlie = 0;
 
         // Get user bet
-
-    mon_array[0] = mon;
-      while(play == 1){
-      winMult = 1;
-      dealerBust = 0;
-      LossID = 0;
-      ans = 1;
-      blackjack1 = 0;
-      blackjack2 = 0;
-      charlie = 0;
-
         printf("You may bet any integer dollar amount that you have remaining.\n");
         sleep(1);
         printf("How much would you like to bet?: ");
@@ -83,9 +56,6 @@ int main(){
 
         // Validate user bet
         while ((bet > mon) && (bet <= 0)) { // no over betting
-
-          while ((bet > mon) || (bet<=0)){ // no over betting
-
             printf("Sorry, invalid bet.\n");
             sleep(1);
             printf("Please enter a valid bet: ");
@@ -281,7 +251,6 @@ int main(){
 
         sleep(1);
 
-
         // Win/Loss Conditions
         if (charlie == 1) {
             mon = winCon(mon, win_mult, bet);
@@ -328,66 +297,6 @@ int main(){
     fprintf(f1, "You ended the game with $%.2f \n", mon);
     fprintf(f1, "\n\n");
     fprintf(f1, "Please take this receipt to the cashier to cash out\n");
-
-        if(charlie==1){                             // Win conditions
-          mon = winCon(mon,winMult,bet);
-        
-        }else if((blackjack1==1)&&(blackjack2==1)){
-           mon = push(mon,bet);
-        
-        }else if((blackjack1==1)&&(blackjack2!=1)){
-           printf("You got Blackjack!!!\n");
-           mon = winCon(mon,winMult,bet);
-        
-        }else if((blackjack2==1)&&(blackjack1!=1)){
-           printf("The Dealer got Blackjack!!!\n");
-           loseCon(mon);
-        
-        }else if((LossID == 1)&&(dealerBust==1)){
-           loseCon(mon);
-           
-        }else if(playerTot == dealerTot){
-           mon = push(mon,bet);
-           
-        }else if((dealerTot > playerTot)&&(dealerBust!=1)){
-           printf("You lose to the dealer\n");
-           loseCon(mon);
-        
-        }else if((dealerBust == 1)&&(LossID!=1)){
-           printf("Dealer Busts!!\n");
-           mon = winCon(mon,winMult,bet);
-        
-        }else if((LossID == 1)&&(dealerTot<=21)){
-           loseCon(mon);
-        
-        }else if((playerTot > dealerTot)&&(LossID!=1)){
-           mon =  winCon(mon,winMult,bet);
-        }
-        mon_array[play_cnt+1] = mon;      //Array for mon totals
-        if(mon==0){
-          printf("You're broke sucker\n");
-          break;
-        } 
-        printf("Would you like to play again? (1=yes,0=No) ");     // while loop end to see of you want to play again
-        scanf("%d", &play);
-        if(play == 1) 
-          system("clear");
-          printf("You have $%.2f\n",mon);
-          play_cnt++;
-    }
-    FILE *f1 = fopen("Recept", "w");      // Writing to a file to make your recipt 
-    fprintf(f1,"\n");
-    fprintf(f1,"You ended the game with $%.2f \n",mon);
-    fprintf(f1,"\n");
-    fprintf(f1,"\n");
-    fprintf(f1," Your money after each game: ");
-    for(play_cntloop=0; play_cntloop<=play_cnt; play_cntloop++){
-      fprintf(f1,"Game %d: %.2f ", play_cntloop+1, mon_array[play_cntloop]);
-    }
-    fprintf(f1,"\n");
-    fprintf(f1,"\n");
-    fprintf(f1,"\n");
-    fprintf(f1,"Please take this recept to the cashier to cash out\n");
     fclose(f1);
     printf("Your receipt is in the text file Receipt\n");
 

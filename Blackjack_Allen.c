@@ -4,7 +4,8 @@
 #include <string.h>
 #include <unistd.h>
 #include <wchar.h>
-//#include "getCard.h"
+#include "functions.h"
+#include "structure.h"
 
 
 #define RED "\x1b[31m"

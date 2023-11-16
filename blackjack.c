@@ -14,389 +14,291 @@
 #define CLUBS "\u2663"
 #define SPADES "\u2660"
 
-/*typedef struct {
-    const char *suit_symbol;
-    char cardChar;
-    const char *color_code;
-    int card_value;
-} Card;
-
-Card generateRandomCard() {
-    Card card;
-    srand(time(NULL));
-
-    int rsuit = rand() % 4;
-    int rval = rand() % 13;
-
-    switch (rsuit) {
-        case 0: // Hearts
-            card.suit_symbol = HEARTS;
-            //printf("\u2665");
-            card.color_code = RED;
-            break;
-        case 1: // Diamonds
-            card.suit_symbol = DIAMONDS;
-            //printf("\u2666");
-            card.color_code = RED;
-            break;
-        case 2: // Clubs
-            card.suit_symbol = CLUBS;
-           // printf("\u2667");
-            card.color_code = GREY;
-            break;
-        case 3: // Spades
-            card.suit_symbol = SPADES;
-            //printf("\u2664");
-            card.color_code = GREY;
-            break;
-        default:
-            break;
-    }
-
-    switch (rval) {
-        case 0: // Ace
-            card.card_value = 11; 
-            card.cardChar = 'A';
-            break;
-        case 1: // 2
-            card.card_value = 2;
-            card.cardChar = '2';
-            break;
-        case 2: // 3
-            card.card_value = 3;
-            card.cardChar = '3';
-            break;
-        case 3: // 4
-            card.card_value = 4;
-            card.cardChar = '4';
-            break;
-        case 4: // 5
-            card.card_value = 5;
-            card.cardChar = '5';
-            break;
-        case 5: // 6
-            card.card_value = 6;
-            card.cardChar = '6';
-            break;
-        case 6: // 7
-            card.card_value = 7;
-            card.cardChar = '7';
-            break;
-        case 7: // 8
-            card.card_value = 8;
-            card.cardChar = '8';
-            break;
-        case 8: // 9
-            card.card_value = 9;
-            card.cardChar = '9';
-            break;
-        case 9: // 10
-            card.card_value = 10;
-            card.cardChar = 'T';
-            break;
-        case 10: // Jack
-            card.card_value = 10;
-            card.cardChar = 'J';
-            break;
-        case 11: // Queen
-            card.card_value = 10;
-            card.cardChar = 'Q';
-            break;
-        case 12: // King
-            card.card_value = 10;
-            card.cardChar = 'K';
-            break;
-        default:
-            break;
-    }
-
-    return card;
-}
-
-void displayCardInfo(Card card) {
-    printf("%s ________ %s    Value:%d\n", card.color_code, BLACK,  card.card_value);
-    printf("%s|        |%s\n", card.color_code, BLACK);
-    printf("%s| %s%s%s %c    |%s\n", card.color_code, BLACK, card.suit_symbol, card.color_code,  card.cardChar, BLACK);
-    printf("%s|        |%s\n", card.color_code, BLACK);
-    printf("%s|        |%s\n", card.color_code, BLACK);
-    printf("%s|        |%s\n", card.color_code, BLACK);
-    printf("%s|        |%s\n", card.color_code, BLACK);
-    printf("%s|        |%s\n", card.color_code, BLACK);
-    printf("%s|    %s%s%s %c |%s\n", card.color_code, BLACK, card.suit_symbol, card.color_code,  card.cardChar, BLACK);
-    printf("%s|________|%s\n", card.color_code, BLACK);
-    //printf("Random Card: %s%c %c%s Value:%d\n", card.color_code, card.suit_symbol, card.cardChar, BLACK, card.card_value);
-}
-void flippedCard(){
-    printf("%s ________ %s\n", RED, BLACK);
-    printf("%s|        |%s\n", RED, BLACK);
-    printf("%s| ****** |%s\n", RED, BLACK);
-    printf("%s| ****** |%s\n", RED, BLACK);
-    printf("%s| ****** |%s\n", RED, BLACK);
-    printf("%s| ****** |%s\n", RED, BLACK);
-    printf("%s| ****** |%s\n", RED, BLACK);
-    printf("%s| ****** |%s\n", RED, BLACK);
-    printf("%s| ****** |%s\n", RED, BLACK);
-    printf("%s|________|%s\n", RED, BLACK);
-}
-
-float winCon(float mon,float winMult, int bet){
-  printf("You win!!\n");
-  mon = mon + bet + (bet*winMult);
-  printf("You have $%.2f \n",mon);
-  return mon;
-}
-
-float loseCon(float mon){
-  printf("You lose!!\n");
-  printf("You have $%.2f \n",mon);
-  return 0;
-}
-
-float push(float mon, int bet){
-  printf("It's a push!!\n");
-  mon = mon + bet;
-  printf("You have $%.2f \n",mon);
-  return mon;
-}
-*/
-int main(){
+int main() {
+    // Variable Declarations
     int bet;
     int ans = 1;
-    int cardCnt= 3;
-    float mon=100;
-    int playerTot = 0;
-    int dealerTot = 0;
+    int card_cnt = 3;
+    float mon = 100;
+    int player_tot = 0;
+    int dealer_tot = 0;
     int play = 1;
-    float winMult;
-    int LossID, dealerBust, blackjack1, blackjack2, charlie;
-    
+    float win_mult;
+    int loss_id, dealer_bust, blackjack1, blackjack2, charlie;
+
+    // Clear the console screen
     system("clear");
     sleep(2);
-   //intro
+
+    // Introductory Messages
     printf("Hello, welcome to the virtual Black Jack Table!\n");
     sleep(1);
     printf("You start with $100. \n");
     sleep(1);
-      while(play == 1){
-      winMult = 1;
-      dealerBust = 0;
-      LossID = 0;
-      ans = 1;
+
+    // Main Game Loop
+    while (play == 1) {
+        // Resetting variables for a new round
+        win_mult = 1;
+        dealer_bust = 0;
+        loss_id = 0;
+        ans = 1;
+        blackjack1 = 0;
+        blackjack2 = 0;
+        charlie = 0;
+
+        // Get user bet
         printf("You may bet any integer dollar amount that you have remaining.\n");
         sleep(1);
         printf("How much would you like to bet?: ");
         sleep(1);
         scanf("%d", &bet);
-          while ((bet > mon) && (bet<=0)){ // no over betting
+
+        // Validate user bet
+        while ((bet > mon) && (bet <= 0)) { // no over betting
             printf("Sorry, invalid bet.\n");
             sleep(1);
             printf("Please enter a valid bet: ");
             scanf("%d", &bet);
             sleep(1);
-           }
-        printf("You bet $%d\n",bet);
+        }
+
+        printf("You bet $%d\n", bet);
         sleep(1);
-        mon = mon-bet;
-        printf("You have $%.2f left.\n",mon);
+        mon = mon - bet;
+        printf("You have $%.2f left.\n", mon);
         sleep(1);
-        printf("\nDealers Cards are: \n");//Dealer Cards
+
+        // Display Dealer's Cards
+        printf("\nDealers Cards are: \n");
         sleep(2);
-        Card randomCard6 = generateRandomCard();
-        displayCardInfo(randomCard6);// Dealer card 1
+        Card random_card6 = generateRandomCard();
+        displayCardInfo(random_card6); // Dealer card 1
         sleep(1);
         printf("\n");
-        flippedCard();//Dealer Card 2 (hidden)
+        flippedCard(); //Dealer Card 2 (hidden)
         sleep(1);
-    
-        printf("\n\nYour cards are: \n\n");// Player Cards
+
+        // Display Player's Cards
+        printf("\n\nYour cards are: \n\n");
         sleep(2);
-        Card randomCard1 = generateRandomCard();
-        displayCardInfo(randomCard1);//Player Card 1
+        Card random_card1 = generateRandomCard();
+        displayCardInfo(random_card1); //Player Card 1
         sleep(1);
         printf("\n");
-        Card randomCard2 = generateRandomCard();
-        displayCardInfo(randomCard2);// Player Card 2
+        Card random_card2 = generateRandomCard();
+        displayCardInfo(random_card2); // Player Card 2
         sleep(1);
-    
-        playerTot = randomCard1.card_value+randomCard2.card_value;//player card total
-          if (playerTot == 21){
+
+        // Calculate player's initial card total
+        player_tot = random_card1.card_value + random_card2.card_value;
+        if (player_tot == 21) {
             printf("Black Jack!\n");
-            winMult = 1.5;
+            win_mult = 1.5;
             blackjack1 = 1;
             ans = 0;
-            }
-        
-          while (ans == 1){
-            printf("\nYour total card value is: %d\n", playerTot);
+        }
+
+        // Player's Turn
+        while (ans == 1) {
+            printf("\nYour total card value is: %d\n", player_tot);
             printf("Would you like to hit or stay? (1-Hit, 0-Stay): ");
-            scanf("%d",&ans);
-            if (ans == 1){
-              Card randomCard3 = generateRandomCard();
-              displayCardInfo(randomCard3);//Player Card 3
-              playerTot = playerTot+randomCard3.card_value;//player card total
+            scanf("%d", &ans);
+
+            // Player chooses to hit
+            if (ans == 1) {
+                Card random_card3 = generateRandomCard();
+                displayCardInfo(random_card3); //Player Card 3
+                player_tot = player_tot + random_card3.card_value; //player card total
+
+                // Check for Ace and adjust if needed
                 card1:
-                if (playerTot > 21){
-                    if ((randomCard1.card_value == 11)||(randomCard2.card_value == 11)||(randomCard3.card_value == 11)){
-                      playerTot = playerTot-10;
-                      goto card1;
-                      }
+                if (player_tot > 21) {
+                    if ((random_card1.card_value == 11) || (random_card2.card_value == 11) || (random_card3.card_value == 11)) {
+                        player_tot = player_tot - 10;
+                        goto card1;
+                    }
                     printf("Bust!\n");
-                    LossID = 1;
-                      break;
-                }else if (playerTot == 21){
-                  printf("21! Congrats!");
-                  break;
-                }else if (playerTot < 21){
-                printf("\nYour total card value is: %d\n", playerTot);
-                  printf("Would you like to hit or stay? (1-Hit, 0-Stay): ");
-                  scanf("%d",&ans);
-                    if (ans == 1){
-                      Card randomCard4 = generateRandomCard();
-                      displayCardInfo(randomCard4);//Player Card 4
-                      playerTot = playerTot+randomCard4.card_value;//player card total
-                      card2:
-                        if (playerTot > 21){
-                          if ((randomCard1.card_value == 11)||(randomCard2.card_value == 11)||(randomCard3.card_value == 11)||(randomCard4.card_value == 11)){
-                            playerTot = playerTot-10;
-                            goto card2;
-                          }
-                          printf("Bust!\n");
-                          LossID = 1;
-                          break;
-                        }else if (playerTot == 21){
-                          printf("21! Congrats!");
-                          break;
-                        }else if (playerTot < 21){
-                          printf("\nYour total card value is: %d\n", playerTot);
-                          printf("Would you like to hit or stay? (1-Hit, 0-Stay): ");
-                          scanf("%d",&ans);
-                            if (ans == 1){
-                              Card randomCard5 = generateRandomCard();
-                              displayCardInfo(randomCard5);//Player Card 5
-                              playerTot = playerTot+randomCard5.card_value;//player card total
-                              card3:
-                                if (playerTot > 21){
-                                  if ((randomCard1.card_value == 11)||(randomCard2.card_value == 11)||(randomCard3.card_value == 11)||(randomCard4.card_value == 11)||(randomCard5.card_value == 11)){
-                                      playerTot = playerTot-10;
-                                      goto card3;
+                    loss_id = 1;
+                    break;
+                } else if (player_tot == 21) {
+                    printf("21! Congrats!");
+                    break;
+                } else if (player_tot < 21) {
+                    printf("\nYour total card value is: %d\n", player_tot);
+                    printf("Would you like to hit or stay? (1-Hit, 0-Stay): ");
+                    scanf("%d", &ans);
+
+                    // Player chooses to hit again
+                    if (ans == 1) {
+                        Card random_card4 = generateRandomCard();
+                        displayCardInfo(random_card4); //Player Card 4
+                        player_tot = player_tot + random_card4.card_value; //player card total
+
+                        // Check for Ace and adjust if needed
+                        card2:
+                        if (player_tot > 21) {
+                            if ((random_card1.card_value == 11) || (random_card2.card_value == 11) || (random_card3.card_value == 11) || (random_card4.card_value == 11)) {
+                                player_tot = player_tot - 10;
+                                goto card2;
+                            }
+                            printf("Bust!\n");
+                            loss_id = 1;
+                            break;
+                        } else if (player_tot == 21) {
+                            printf("21! Congrats!");
+                            break;
+                        } else if (player_tot < 21) {
+                            printf("\nYour total card value is: %d\n", player_tot);
+                            printf("Would you like to hit or stay? (1-Hit, 0-Stay): ");
+                            scanf("%d", &ans);
+
+                            // Player chooses to hit again
+                            if (ans == 1) {
+                                Card random_card5 = generateRandomCard();
+                                displayCardInfo(random_card5); //Player Card 5
+                                player_tot = player_tot + random_card5.card_value; //player card total
+
+                                // Check for Ace and adjust if needed
+                                card3:
+                                if (player_tot > 21) {
+                                    if ((random_card1.card_value == 11) || (random_card2.card_value == 11) || (random_card3.card_value == 11) || (random_card4.card_value == 11) || (random_card5.card_value == 11)) {
+                                        player_tot = player_tot - 10;
+                                        goto card3;
                                     }
-                                   printf("Bust!");
-                                   LossID = 1;
-                                  break;
-                                }else if (playerTot <= 21){
-                                  printf("Holy Moly! Five Finger Charlie punch!\n");
-                                  winMult = 5;
-                                  charlie = 1;
-                                  
-                                  break;
+                                    printf("Bust!");
+                                    loss_id = 1;
+                                    break;
+                                } else if (player_tot <= 21) {
+                                    printf("Holy Moly! Five Finger Charlie punch!\n");
+                                    win_mult = 5; // payout increased to 5x
+                                    charlie = 1; // win condition for the win logic
+                                    break;
                                 }
-                            } else if (ans == 0){
+                            } else if (ans == 0) {
                                 break;
-                                }
+                            }
                         }
-                    } else if (ans == 0){
+                    } else if (ans == 0) {
                         break;
-                        }
+                    }
                 }
-            } else if (ans == 0){
+            } else if (ans == 0) {
                 break;
-                }
-          }
-      
-    
-        printf("Your final combined card value is: %d\n", playerTot);
+            }
+        }
+
+        // Display final combined player card value
+        printf("Your final combined card value is: %d\n", player_tot);
         sleep(2);
+
+        // Dealer's Turn
         printf("\nThe dealers cards: \n\n");
         sleep(1);
-        displayCardInfo(randomCard6);// Dealer card 1
+        displayCardInfo(random_card6); // Dealer card 1
         sleep(1);
         printf("\nThe dealer flips their face down card: \n");
         sleep(1);
-        Card randomCard7 = generateRandomCard();
-        displayCardInfo(randomCard7);// Dealer card 2
-        dealerTot = randomCard6.card_value+randomCard7.card_value;//dealer card total
-        printf("\nThe dealers combined value is: %d\n", dealerTot);
-        if(dealerTot == 21){
-          blackjack2 = 1;
+        Card random_card7 = generateRandomCard();
+        displayCardInfo(random_card7); // Dealer card 2
+        dealer_tot = random_card6.card_value + random_card7.card_value; //dealer card total
+        if (dealer_tot == 21) {
+            blackjack2 = 1;
         }
         sleep(1);
-          if (dealerTot<17){
-            Card randomCard8 = generateRandomCard();
-            dealerTot = dealerTot+randomCard8.card_value;//dealer card total
-            displayCardInfo(randomCard8);// Dealer card 3
-            printf("\nThe dealers combined value is: %d\n", dealerTot);
+
+        // Dealer draws additional cards if needed
+        if (dealer_tot < 17) {
+            Card random_card8 = generateRandomCard();
+            dealer_tot = dealer_tot + random_card8.card_value; //dealer card total
+            displayCardInfo(random_card8); // Dealer card 3
             sleep(1);
-              if (dealerTot<17){
-                Card randomCard9 = generateRandomCard();
-                dealerTot = dealerTot+randomCard9.card_value;//dealer card total
-                displayCardInfo(randomCard9);// Dealer card 4
-                printf("\nThe dealers combined value is: %d\n", dealerTot);
+
+            // Check for Ace and adjust if needed
+            card9:
+            if (dealer_tot < 17) {
+                Card random_card9 = generateRandomCard();
+                dealer_tot = dealer_tot + random_card9.card_value; //dealer card total
+                displayCardInfo(random_card9); // Dealer card 4
                 sleep(1);
-                  if (dealerTot<17){
-                    Card randomCard10 = generateRandomCard();
-                    dealerTot = dealerTot+randomCard10.card_value;//dealer card total
-                    displayCardInfo(randomCard10);// Dealer card 5
-                    printf("\nThe dealers combined value is: %d\n", dealerTot);
+
+                // Check for Ace and adjust if needed
+                card10:
+                if (dealer_tot < 17) {
+                    Card random_card10 = generateRandomCard();
+                    dealer_tot = dealer_tot + random_card10.card_value; //dealer card total
+                    displayCardInfo(random_card10); // Dealer card 5
                     sleep(1);
-                  }  
-              }
-          }
-        if (dealerTot > 21){
-          dealerBust = 1;
-          }
+                } else if ((dealer_tot > 21) && ((random_card6.card_value == 11) || (random_card7.card_value == 11) || (random_card8.card_value == 11) || (random_card9.card_value == 11))) {
+                    dealer_tot = dealer_tot - 10;
+                    goto card10;
+                }
+            } else if ((dealer_tot > 21) && ((random_card6.card_value == 11) || (random_card7.card_value == 11) || (random_card8.card_value == 11))) {
+                dealer_tot = dealer_tot - 10;
+                goto card9;
+            }
+        } else if ((dealer_tot > 21) && ((random_card6.card_value == 11) || (random_card7.card_value == 11))) {
+            dealer_tot = dealer_tot - 10;
+        }
+
+        // Display final combined dealer card value
+        printf("\nThe dealers combined value is: %d\n", dealer_tot);
+
+        // Determine the winner and adjust money
+        if (dealer_tot > 21) {
+            dealer_bust = 1;
+        }
+
         sleep(1);
-        if(charlie==1){
-          mon = winCon(mon,winMult,bet);
-        
-        }else if((blackjack1==1)&&(blackjack2==1)){
-           mon = push(mon,bet);
-        
-        }else if((blackjack1==1)&&(blackjack2!=1)){
-           printf("You got Blackjack!!!\n");
-           mon = winCon(mon,winMult,bet);
-        
-        }else if((blackjack2==1)&&(blackjack1!=1)){
-           printf("The Dealer got Blackjack!!!\n");
-           loseCon(mon);
-        
-        }else if(playerTot == dealerTot){
-           mon = push(mon,bet);
-        
-        }else if((dealerTot > playerTot)&&(dealerBust!=1)){
-           printf("You lose to the dealer\n");
-           loseCon(mon);
-        
-        }else if((dealerBust == 1)&&(LossID!=1)){
-           printf("Dealer Busts!!\n");
-           mon = winCon(mon,winMult,bet);
-        
-        }else if((LossID == 1)&&(dealerBust==1)){
-           loseCon(mon);
-        
-        }else if((LossID == 1)&&(dealerTot<=21)){
-           loseCon(mon);
-        
-        }else if((playerTot > dealerTot)&&(LossID!=1)){
-           mon =  winCon(mon,winMult,bet);
+
+        // Win/Loss Conditions
+        if (charlie == 1) {
+            mon = winCon(mon, win_mult, bet);
+        } else if ((blackjack1 == 1) && (blackjack2 == 1)) {
+            mon = push(mon, bet);
+        } else if ((blackjack1 == 1) && (blackjack2 != 1)) {
+            printf("You got Blackjack!!!\n");
+            mon = winCon(mon, win_mult, bet);
+        } else if ((blackjack2 == 1) && (blackjack1 != 1)) {
+            printf("The Dealer got Blackjack!!!\n");
+            loseCon(mon);
+        } else if (player_tot == dealer_tot) {
+            mon = push(mon, bet);
+        } else if ((dealer_tot > player_tot) && (dealer_bust != 1)) {
+            printf("You lose to the dealer\n");
+            loseCon(mon);
+        } else if ((dealer_bust == 1) && (loss_id != 1)) {
+            printf("Dealer Busts!!\n");
+            mon = winCon(mon, win_mult, bet);
+        } else if ((loss_id == 1) && (dealer_bust == 1)) {
+            loseCon(mon);
+        } else if ((loss_id == 1) && (dealer_tot <= 21)) {
+            loseCon(mon);
+        } else if ((player_tot > dealer_tot) && (loss_id != 1)) {
+            mon = winCon(mon, win_mult, bet);
         }
-        if(mon==0){
-          printf("You're broke sucker\n");
-          break;
+
+        // Check if player is out of money
+        if (mon == 0) {
+            printf("You're broke sucker\n");
+            break;
         }
-        printf("Would you like to play again? (1=yes,0=No) ");
+
+        // Ask if the player wants to play again
+        printf("Would you like to play again? (1=yes, 0=No) ");
         scanf("%d", &play);
-        if(play == 1)
-          system("clear");
+        if (play == 1)
+            system("clear");
     }
-    FILE *f1 = fopen("Recept", "w");
-    fprintf(f1,"\n");
-    fprintf(f1,"You ended the game with $%.2f \n",mon);
-    fprintf(f1,"\n");
-    fprintf(f1,"\n");
-    fprintf(f1,"Please take this recept to the cashier to cash out\n");
+
+    // Save game information to a receipt file
+    FILE *f1 = fopen("Receipt", "w");
+    fprintf(f1, "\n");
+    fprintf(f1, "You ended the game with $%.2f \n", mon);
+    fprintf(f1, "\n\n");
+    fprintf(f1, "Please take this receipt to the cashier to cash out\n");
     fclose(f1);
-    printf("Your recept is in the text file Recept\n");
-    
+    printf("Your receipt is in the text file Receipt\n");
+
     return 0;
 }
-

@@ -17,7 +17,7 @@
 
 typedef struct {
     const char *suit_symbol;
-    char cardChar;
+    char card_char;
     const char *color_code;
     int card_value;
 } Card;

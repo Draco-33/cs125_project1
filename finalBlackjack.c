@@ -287,7 +287,6 @@ int main() {
         // Ask if the player wants to play again
         printf("Would you like to play again? (1=yes, 0=No) ");
         scanf("%d", &play);
-        while(check == 1)
         if (play == 1){
             system("clear");
         }

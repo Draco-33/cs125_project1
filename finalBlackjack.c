@@ -30,10 +30,8 @@ int main() {
     system("clear");
     sleep(2);
 
-    // Introductory Messages
+    // Introductory Message
     printf("Hello, welcome to the virtual Black Jack Table!\n");
-    sleep(1);
-    printf("You start with $100. \n");
     sleep(1);
 
     // Main Game Loop
@@ -46,9 +44,11 @@ int main() {
         blackjack1 = 0;
         blackjack2 = 0;
         charlie = 0;
-
+      
         // Get user bet
-        printf("You may bet any integer dollar amount that you have remaining.\n");
+        printf("You may bet any integer dollar amount that you have remaining. \n);
+        sleep(1);
+        printf("You have $%.2f.\n", mon);
         sleep(1);
         printf("How much would you like to bet?: ");
         sleep(1);
@@ -175,15 +175,15 @@ int main() {
                                     charlie = 1; // win condition for the win logic
                                     break;
                                 }
-                            } else if (ans == 0) {
+                            } else if (ans != 1) {
                                 break;
                             }
                         }
-                    } else if (ans == 0) {
+                    } else if (ans != 1) {
                         break;
                     }
                 }
-            } else if (ans == 0) {
+            } else if (ans != 1) {
                 break;
             }
         }
@@ -287,8 +287,10 @@ int main() {
         // Ask if the player wants to play again
         printf("Would you like to play again? (1=yes, 0=No) ");
         scanf("%d", &play);
-        if (play == 1)
+        while(check == 1)
+        if (play == 1){
             system("clear");
+        }
     }
 
     // Save game information to a receipt file
